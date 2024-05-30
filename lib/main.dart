@@ -1,4 +1,6 @@
 import 'package:final_project/constants/global_variables.dart';
+import 'package:final_project/features/auth/screens/auth_screen.dart';
+import 'package:final_project/router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(color: GlobalVariables.secondaryColor),
         primaryColor: GlobalVariables.secondaryColor,
       ),
+      onGenerateRoute: (settings) => generateRoute(settings),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('hello'),
@@ -30,10 +33,14 @@ class MyApp extends StatelessWidget {
                 'Flutter Demo Home Page',
               ),
             ),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Click'),
-            ),
+            Builder(builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, AuthScreen.routeName);
+                },
+                child: Text('Click'),
+              );
+            }),
           ],
         ),
       ),
