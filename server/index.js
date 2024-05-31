@@ -7,6 +7,7 @@ const DB =
   "mongodb+srv://bishrut_uprety:bishrut123@cluster0.wi65ssf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 const authRouter = require("./routes/auth");
+app.use(express.json());
 app.use(authRouter);
 
 mongoose
