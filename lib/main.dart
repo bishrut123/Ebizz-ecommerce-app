@@ -1,7 +1,7 @@
+import 'package:final_project/common/widgets/bottom_bar.dart';
 import 'package:final_project/constants/global_variables.dart';
 import 'package:final_project/features/auth/screens/auth_screen.dart';
 import 'package:final_project/features/auth/services/auth_service.dart';
-import 'package:final_project/features/home/screens/home_screen.dart';
 import 'package:final_project/providers/user_provider.dart';
 import 'package:final_project/router.dart';
 import 'package:flutter/material.dart';
@@ -37,13 +37,14 @@ class _MyAppState extends State<MyApp> {
       title: 'Ebizz',
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
-        colorScheme: ColorScheme.light(primary: GlobalVariables.secondaryColor),
-        appBarTheme: AppBarTheme(color: GlobalVariables.secondaryColor),
+        colorScheme:
+            const ColorScheme.light(primary: GlobalVariables.secondaryColor),
+        appBarTheme: const AppBarTheme(color: GlobalVariables.secondaryColor),
         primaryColor: GlobalVariables.secondaryColor,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const BottomBar()
           : const AuthScreen(),
     );
   }

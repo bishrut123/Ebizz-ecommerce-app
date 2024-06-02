@@ -1,3 +1,4 @@
+import 'package:final_project/common/widgets/bottom_bar.dart';
 import 'package:final_project/features/auth/screens/auth_screen.dart';
 import 'package:final_project/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         builder: (_) => const AuthScreen(),
       );
 
-    case HomeScreen.routeName:
+    case BottomBar.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const HomeScreen(),
+        builder: (_) => const BottomBar(),
       );
 
     default:
