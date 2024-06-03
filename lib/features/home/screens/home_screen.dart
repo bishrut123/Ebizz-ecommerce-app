@@ -1,5 +1,7 @@
 import 'package:final_project/constants/global_variables.dart';
 import 'package:final_project/features/home/widgets/address_box.dart';
+import 'package:final_project/features/home/widgets/carousel_image.dart';
+import 'package:final_project/features/home/widgets/deal_of_day.dart';
 import 'package:final_project/features/home/widgets/top_categories.dart';
 import 'package:flutter/material.dart';
 
@@ -89,12 +91,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: const Column(
-        children: [
-          AddressBox(),
-          SizedBox(height: 10),
-          TopCategories(),
-        ],
+      body: SingleChildScrollView(
+        child: const Column(
+          children: [
+            AddressBox(),
+            SizedBox(height: 10),
+            TopCategories(),
+            SizedBox(height: 10),
+            CarouselImage(),
+            DealOfDay(),
+          ],
+        ),
       ),
     );
   }
