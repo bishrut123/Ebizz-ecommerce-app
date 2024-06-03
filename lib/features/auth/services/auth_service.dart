@@ -4,7 +4,6 @@ import 'package:final_project/common/widgets/bottom_bar.dart';
 import 'package:final_project/constants/error_handling.dart';
 import 'package:final_project/constants/global_variables.dart';
 import 'package:final_project/constants/utils.dart';
-import 'package:final_project/features/home/screens/home_screen.dart';
 import 'package:final_project/models/user.dart';
 import 'package:final_project/providers/user_provider.dart';
 import 'package:flutter/material.dart';
