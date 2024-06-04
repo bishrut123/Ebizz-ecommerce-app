@@ -3,20 +3,24 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
-  final Color bgcolor;
-  final Color fgcolor;
+  final Color? bgcolor;
+  final Color? fgcolor;
 
-  const CustomButton(
-      {super.key,
-      required this.text,
-      required this.onTap,
-      required this.bgcolor,
-      required this.fgcolor});
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.onTap,
+    this.bgcolor,
+    this.fgcolor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        child: Text(text),
+        child: Text(
+          text,
+          // style: TextStyle(fontWeight: FontWeight.w500),
+        ),
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 50),
