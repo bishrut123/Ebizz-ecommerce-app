@@ -7,8 +7,11 @@ const DB =
   "mongodb+srv://bishrut_uprety:bishrut123@cluster0.wi65ssf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 const authRouter = require("./routes/auth");
+const adminRouter = require("./routes/admin");
+
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
 
 mongoose
   .connect(DB)
