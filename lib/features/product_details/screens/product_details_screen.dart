@@ -1,8 +1,12 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:final_project/common/widgets/custom_button.dart';
 import 'package:final_project/common/widgets/stars.dart';
 import 'package:final_project/constants/global_variables.dart';
 import 'package:final_project/features/search/screens/search_screen.dart';
 import 'package:final_project/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static const String routeName = '/product-details';
@@ -98,15 +102,127 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ),
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.product.id!,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.product.id!,
+                    ),
+                    const Stars(rating: 4),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 10,
+                ),
+                child: Text(
+                  widget.product.name,
+                  style: const TextStyle(
+                    fontSize: 15,
                   ),
-                  const Stars(rating: 4),
-                ],
+                ),
+              ),
+              CarouselSlider(
+                items: widget.product.images.map((i) {
+                  return Builder(
+                    builder: (BuildContext context) => Image.network(
+                      i,
+                      fit: BoxFit.contain,
+                      height: 200,
+                    ),
+                  );
+                }).toList(),
+                options: CarouselOptions(
+                  viewportFraction: 1,
+                  height: 300,
+                ),
+              ),
+              Container(
+                color: Colors.black12,
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: RichText(
+                  text: TextSpan(
+                      text: 'Deal Price:  ',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Rs.${widget.product.price}',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.product.description),
+              ),
+              Container(
+                color: Colors.black12,
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: CustomButton(
+                  text: 'Buy Now',
+                  onTap: () {},
+                  bgcolor: GlobalVariables.selectedNavBarColor,
+                  fgcolor: GlobalVariables.backgroundColor,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: CustomButton(
+                  text: 'Add to Cart',
+                  onTap: () {},
+                  bgcolor: const Color.fromRGBO(255, 200, 14, 1),
+                  fgcolor: GlobalVariables.unselectedNavBarColor,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                color: Colors.black12,
+                height: 5,
+              ),
+              const Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Rate the product',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              RatingBar.builder(
+                initialRating: 0,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: GlobalVariables.secondaryColor,
+                ),
+                onRatingUpdate: (rating) {},
               )
             ],
           ),
