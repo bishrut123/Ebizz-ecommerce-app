@@ -15,4 +15,13 @@ productRouter.get("/api/products/search/:name", auth, async (req, res) => {
   }
 });
 
+productRouter.get("/api/products/", auth, async (req, res) => {
+  try {
+    const products = await Product.find({ category: req.query.category });
+    res.json(products);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = productRouter;

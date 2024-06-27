@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class SearchServices {
-  Future<List<Product>> fetchSeachedProduct({
+  Future<List<Product>> fetchSearchedProduct({
     required BuildContext context,
     required String searchQuery,
   }) async {
