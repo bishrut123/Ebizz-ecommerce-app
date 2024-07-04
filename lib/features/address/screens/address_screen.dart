@@ -1,13 +1,16 @@
 import 'package:final_project/common/widgets/custom_button.dart';
 import 'package:final_project/common/widgets/custom_textfield.dart';
 import 'package:final_project/constants/global_variables.dart';
+import 'package:final_project/payment_configurations.dart';
 import 'package:final_project/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 
 class AddressScreen extends StatefulWidget {
   static const String routeName = '/address';
-  const AddressScreen({super.key});
+  final String totalAmount;
+  const AddressScreen({super.key, required this.totalAmount});
 
   @override
   State<AddressScreen> createState() => _AddressScreenState();
@@ -20,6 +23,18 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController cityController = TextEditingController();
   final _addressFormKey = GlobalKey<FormState>();
 
+  List<PaymentItem> paymentItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    paymentItems.add(PaymentItem(
+      amount: widget.totalAmount,
+      label: 'Total Amount',
+      status: PaymentItemStatus.final_price,
+    ));
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -28,6 +43,9 @@ class _AddressScreenState extends State<AddressScreen> {
     pincodeController.dispose();
     cityController.dispose();
   }
+
+  void onApplePayResult(res) {}
+  void onGooglePayResult(res) {}
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +118,32 @@ class _AddressScreenState extends State<AddressScreen> {
                       controller: cityController,
                       hintText: 'Town/City',
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 10),
                   ],
+                ),
+              ),
+              ApplePayButton(
+                width: double.infinity,
+                style: ApplePayButtonStyle.whiteOutline,
+                type: ApplePayButtonType.buy,
+                paymentConfiguration:
+                    PaymentConfiguration.fromJsonString(defaultApplePay),
+                onPaymentResult: onApplePayResult,
+                paymentItems: paymentItems,
+                margin: const EdgeInsets.only(top: 10),
+                height: 50,
+              ),
+              const SizedBox(height: 10),
+              GooglePayButton(
+                paymentConfiguration:
+                    PaymentConfiguration.fromJsonString(defaultGooglePay),
+                onPaymentResult: onGooglePayResult,
+                paymentItems: paymentItems,
+                height: 50,
+                type: GooglePayButtonType.buy,
+                margin: const EdgeInsets.only(top: 10),
+                loadingIndicator: const Center(
+                  child: CircularProgressIndicator(),
                 ),
               ),
             ],
