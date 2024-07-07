@@ -1,6 +1,7 @@
 import 'package:final_project/common/widgets/custom_button.dart';
 import 'package:final_project/common/widgets/custom_textfield.dart';
 import 'package:final_project/constants/global_variables.dart';
+import 'package:final_project/constants/utils.dart';
 import 'package:final_project/payment_configurations.dart';
 import 'package:final_project/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController cityController = TextEditingController();
   final _addressFormKey = GlobalKey<FormState>();
 
+  String addressToBeUsed = "";
   List<PaymentItem> paymentItems = [];
 
   @override
@@ -46,6 +48,29 @@ class _AddressScreenState extends State<AddressScreen> {
 
   void onApplePayResult(res) {}
   void onGooglePayResult(res) {}
+
+  void payPressed(String addressFromProvider) {
+    addressToBeUsed = "";
+
+    bool isForm = flatBuildingController.text.isNotEmpty ||
+        areaController.text.isNotEmpty ||
+        pincodeController.text.isNotEmpty ||
+        cityController.text.isNotEmpty;
+
+    if (isForm) {
+      if (_addressFormKey.currentState!.validate()) {
+        addressToBeUsed =
+            '${flatBuildingController.text}, ${areaController.text}, ${cityController.text} - ${pincodeController.text}';
+      } else {
+        throw Exception('Please enter all the values');
+      }
+    } else if (addressFromProvider.isNotEmpty) {
+      addressToBeUsed = addressFromProvider;
+    } else {
+      showSnackBar(context, 'ERROR');
+    }
+    print(addressToBeUsed);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,9 +157,11 @@ class _AddressScreenState extends State<AddressScreen> {
                 paymentItems: paymentItems,
                 margin: const EdgeInsets.only(top: 10),
                 height: 50,
+                onPressed: () => payPressed(address),
               ),
               const SizedBox(height: 10),
               GooglePayButton(
+                onPressed: () => payPressed(address),
                 paymentConfiguration:
                     PaymentConfiguration.fromJsonString(defaultGooglePay),
                 onPaymentResult: onGooglePayResult,
