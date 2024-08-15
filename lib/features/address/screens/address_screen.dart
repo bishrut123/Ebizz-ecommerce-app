@@ -2,6 +2,7 @@ import 'package:final_project/common/widgets/custom_button.dart';
 import 'package:final_project/common/widgets/custom_textfield.dart';
 import 'package:final_project/constants/global_variables.dart';
 import 'package:final_project/constants/utils.dart';
+import 'package:final_project/features/address/services/address_services.dart';
 import 'package:final_project/payment_configurations.dart';
 import 'package:final_project/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _AddressScreenState extends State<AddressScreen> {
 
   String addressToBeUsed = "";
   List<PaymentItem> paymentItems = [];
+  final AddressServices addressServices = AddressServices();
 
   @override
   void initState() {
@@ -46,8 +48,35 @@ class _AddressScreenState extends State<AddressScreen> {
     cityController.dispose();
   }
 
-  void onApplePayResult(res) {}
-  void onGooglePayResult(res) {}
+  void onApplePayResult(res) {
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
+      addressServices.saveUserAddress(
+          context: context, address: addressToBeUsed);
+    }
+    addressServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      totalSum: double.parse(widget.totalAmount),
+    );
+  }
+
+  void onGooglePayResult(res) {
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
+      addressServices.saveUserAddress(
+          context: context, address: addressToBeUsed);
+    }
+    addressServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      totalSum: double.parse(widget.totalAmount),
+    );
+  }
 
   void payPressed(String addressFromProvider) {
     addressToBeUsed = "";
@@ -74,8 +103,8 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var address = context.watch<UserProvider>().user.address;
-    var address = '101 fake street';
+    var address = context.watch<UserProvider>().user.address;
+    // var address = '101 fake street';
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
