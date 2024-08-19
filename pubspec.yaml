@@ -46,6 +46,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   json_annotation: ^4.9.0
   pay: ^2.0.0
+  syncfusion_flutter_charts: ^26.2.9
 
 dev_dependencies:
   flutter_test:
