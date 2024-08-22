@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 //for college
-// String uri = 'http://192.168.100.85:3000';
+String uri = 'http://192.168.102.62:3000';
 
 //for home
-String uri = 'http://192.168.1.74:3000';
+// String uri = 'http://192.168.1.74:3000';
 
 class GlobalVariables {
   // COLORS
